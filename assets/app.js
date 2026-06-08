@@ -6,7 +6,8 @@ const state = {
   mode: "start",
   source: "Laptop via USB-C",
   volume: 42,
-  adminOpen: false
+  adminOpen: false,
+  poweredDownAt: 0
 };
 
 const icon = (name, size = 20) => `<i data-lucide="${name}" style="width:${size}px;height:${size}px" aria-hidden="true"></i>`;
@@ -137,6 +138,7 @@ function renderHome() {
 }
 
 function renderScreens() {
+  const poweredDown = state.mode === "powerdown";
   return `
     <section class="workspace demo-workspace">
       <div class="page-head">
@@ -148,7 +150,7 @@ function renderScreens() {
         ${roomSelector()}
       </div>
 
-      <div class="meeting-room-scene" aria-label="Realistische vergaderruimte demo">
+      <div class="meeting-room-scene ${poweredDown ? "powered-down" : ""}" aria-label="Realistische vergaderruimte demo">
         <div class="sony-display" aria-label="Sony 65 inch hoofdscherm">
           <div class="sony-screen">
             ${renderMeetingScreen()}
@@ -165,34 +167,27 @@ function renderScreens() {
               <span class="panel-chip">10:24</span>
             </div>
 
-            <div class="touch-button-grid">
-              ${panelButton("teams", "video", "Teams")}
+            <div class="touch-button-grid primary-controls">
               ${panelButton("presenteren", "presentation", "Presenteren")}
-              ${panelButton("help", "circle-help", "Help")}
+              ${panelButton("teams", "video", "Teams")}
             </div>
 
-            <div class="volume-row">
-              <span>Volume</span>
-              <div class="volume-controls">
-                <button class="icon-button" data-action="volume-down" title="Volume lager">${icon("volume-1", 17)}</button>
-                <input data-action="volume" type="range" min="0" max="100" value="${state.volume}" aria-label="Volume" />
-                <button class="icon-button" data-action="volume-up" title="Volume hoger">${icon("volume-2", 17)}</button>
-              </div>
+            <div class="touch-button-grid sub-controls">
+              ${panelButton("help", "circle-help", "Help")}
+              ${panelButton("powerdown", "power", "Power down", "danger")}
+            </div>
+
+            <div class="panel-volume-corner" aria-label="Volume bediening">
+              <button class="icon-button" data-action="volume-down" title="Volume lager">${icon("volume-1", 16)}</button>
+              <span>${state.volume}%</span>
+              <button class="icon-button" data-action="volume-up" title="Volume hoger">${icon("volume-2", 16)}</button>
             </div>
 
             <div class="panel-help ${state.mode === "help" ? "open" : ""}" id="panelHelp">
               <strong>Hulp nodig?</strong>
-              <span>Open het demo platform voor instructie of ondersteuning.</span>
+              <span>Scan of open het demo platform voor hulp in deze ruimte.</span>
               <a class="pill-button primary" href="${roomLink("room")}">${icon("external-link", 17)}Open platform</a>
             </div>
-          </div>
-        </aside>
-
-        <aside class="wall-touch-panel" aria-label="Wandbediening">
-          <div class="wall-touch-grid">
-            ${icon("monitor", 16)}
-            ${icon("video", 16)}
-            ${icon("qr-code", 16)}
           </div>
         </aside>
       </div>
@@ -202,29 +197,15 @@ function renderScreens() {
 
 function renderMeetingScreen() {
   if (state.mode === "presenteren") {
-    return screenStatus("presentation", "Presenteren actief", `${state.source} is geselecteerd. Controleer beeld en geluid op het hoofdscherm.`);
+    return renderPresentationView();
   }
   if (state.mode === "teams") {
-    return screenStatus("video", "Teams vergadering", "Start Teams via de EMC-PC of gekoppelde laptop en controleer camera, microfoon en luidsprekers.");
+    return renderTeamsView();
   }
-  if (state.mode === "help") {
-    return `
-      <div class="screen-content white-screen">
-        <img class="screen-logo" src="./assets/erasmus-mc.png" alt="Erasmus MC" />
-        <div class="screen-help-layout">
-          <div>
-            <div class="screen-kicker">Hulp in ruimte ${state.room.number}</div>
-            <h2 class="screen-title">Scan voor ondersteuning</h2>
-            <p class="screen-subtitle">Open de ruimtespecifieke instructie, meld een storing of bel direct support.</p>
-          </div>
-          <div class="qr-panel">
-            <div class="qr-code" data-qr="${publicRoomUrl()}"></div>
-            <strong>Demo platform</strong>
-          </div>
-        </div>
-      </div>
-    `;
-  }
+  return renderInstructionScreen();
+}
+
+function renderInstructionScreen() {
   return `
     <div class="screen-content white-screen">
       <img class="screen-logo" src="./assets/erasmus-mc.png" alt="Erasmus MC" />
@@ -252,6 +233,52 @@ function renderMeetingScreen() {
   `;
 }
 
+function renderPresentationView() {
+  return `
+    <div class="screen-content presentation-screen">
+      <img class="screen-logo" src="./assets/erasmus-mc.png" alt="Erasmus MC" />
+      <div class="presentation-slide">
+        <p class="screen-kicker">Presenteren actief</p>
+        <h2>Voorbeeld presentatie</h2>
+        <p>Bron: ${state.source}</p>
+        <div class="slide-bars">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <div class="slide-visual">
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderTeamsView() {
+  return `
+    <div class="screen-content teams-screen">
+      <div class="teams-topbar">
+        <strong>Teams vergadering</strong>
+        <span>${state.room.number} · volume ${state.volume}%</span>
+      </div>
+      <div class="teams-grid">
+        ${["Spreker", "EMC-PC", "Laptop", "Ruimte"].map((name, index) => `
+          <div class="teams-tile ${index === 0 ? "active" : ""}">
+            <span>${name.slice(0, 2).toUpperCase()}</span>
+            <strong>${name}</strong>
+          </div>
+        `).join("")}
+      </div>
+      <div class="teams-controls">
+        <span>${icon("video", 14)}Camera actief</span>
+        <span>${icon("volume-2", 14)}Audio ruimte</span>
+        <span>${icon("users", 14)}Hybride overleg</span>
+      </div>
+    </div>
+  `;
+}
+
 function screenStatus(iconName, title, text) {
   return `
     <div class="screen-content white-screen">
@@ -272,9 +299,9 @@ function screenStatus(iconName, title, text) {
   `;
 }
 
-function panelButton(mode, iconName, label) {
+function panelButton(mode, iconName, label, variant = "") {
   return `
-    <button class="panel-button ${state.mode === mode ? "active" : ""}" data-mode="${mode}">
+    <button class="panel-button ${variant} ${state.mode === mode ? "active" : ""}" data-mode="${mode}">
       ${icon(iconName, 24)}
       <span>${label}</span>
     </button>
@@ -283,86 +310,79 @@ function panelButton(mode, iconName, label) {
 
 function renderRoomPage() {
   return `
-    <section class="workspace">
-      <div class="page-head">
+    <section class="workspace platform-workspace">
+      <div class="page-head platform-head">
         <div>
-          <img class="page-logo" src="./assets/erasmus-mc.png" alt="Erasmus MC" />
           <p class="eyebrow">Demo platform</p>
-          <h1>${state.room.name}</h1>
-          <p>${state.room.location}</p>
-          <div class="meta-row">
-            <span class="tag">${icon("door-open", 15)}${state.room.type}</span>
-            <span class="tag">${icon("map-pin", 15)}${state.room.number}</span>
-            <span class="tag ${state.room.status === "In gebruik" ? "warning" : ""}">${icon("activity", 15)}${state.room.status}</span>
-          </div>
+          <h1>Hulp in ruimte ${state.room.number}</h1>
+          <p>${state.room.type} · ${state.room.location}</p>
         </div>
         ${roomSelector()}
       </div>
 
-      <div class="room-page">
-        <div class="quick-actions">
-          <a class="quick-action primary" href="#supportForm">${icon("message-square-warning", 22)}Storing melden</a>
-          <a class="quick-action" href="tel:${state.room.supportPhone.replaceAll(" ", "")}">${icon("phone", 22)}Bel support</a>
-          <a class="quick-action" href="${roomLink("beheer")}">${icon("lock-keyhole", 22)}Beheer</a>
+      <div class="platform-page">
+        <div class="platform-actions">
+          <a class="quick-action primary" href="tel:${state.room.supportPhone.replaceAll(" ", "")}">${icon("phone", 22)}Bel support</a>
+          <a class="quick-action" href="#supportForm">${icon("message-square-warning", 22)}Storing melden</a>
         </div>
 
-        <div class="scenario-grid">
-          ${state.room.scenarios.map(renderScenario).join("")}
+        <div class="platform-choice-grid">
+          ${state.room.scenarios.map(renderPlatformChoice).join("")}
         </div>
 
-        <aside class="side-stack">
-          <section class="support-card urgent">
-            <div class="support-line">
-              <span class="support-icon">${icon("phone", 22)}</span>
-              <div>
-                <span>Directe hulp</span>
-                <strong>${state.room.supportPhone}</strong>
-              </div>
+        <details class="support-card problems-card">
+          <summary>
+            <span>Veelvoorkomende problemen</span>
+            ${icon("chevron-down", 18)}
+          </summary>
+          <ul class="issue-list">
+            ${state.room.issues.map((issue) => `<li>${issue}</li>`).join("")}
+          </ul>
+        </details>
+
+        <section class="support-card support-form-card">
+          <h2>Storing melden</h2>
+          <form id="supportForm" class="field-grid">
+            <label class="field">
+              <span>Type melding</span>
+              <select name="type">
+                <option>Geen beeld</option>
+                <option>Geen geluid</option>
+                <option>Teams probleem</option>
+                <option>Bediening werkt niet</option>
+                <option>Anders</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Ruimte</span>
+              <input name="room" value="${state.room.number}" readonly />
+            </label>
+            <label class="field full">
+              <span>Omschrijving</span>
+              <textarea name="description" rows="3" placeholder="Wat werkt er niet?"></textarea>
+            </label>
+            <div class="field full actions">
+              <button class="action-button primary" type="submit">${icon("send", 17)}Melding opslaan</button>
             </div>
-          </section>
-
-          <section class="support-card">
-            <h2>Veelvoorkomende problemen</h2>
-            <ul class="issue-list">
-              ${state.room.issues.map((issue) => `<li>${issue}</li>`).join("")}
-            </ul>
-          </section>
-
-          <section class="support-card">
-            <h2>Storing melden</h2>
-            <form id="supportForm" class="field-grid">
-              <label class="field">
-                <span>Type melding</span>
-                <select name="type">
-                  <option>Geen beeld</option>
-                  <option>Geen geluid</option>
-                  <option>Teams probleem</option>
-                  <option>Bediening werkt niet</option>
-                  <option>Anders</option>
-                </select>
-              </label>
-              <label class="field">
-                <span>Ruimte</span>
-                <input name="room" value="${state.room.number}" readonly />
-              </label>
-              <label class="field full">
-                <span>Omschrijving</span>
-                <textarea name="description" rows="4" placeholder="Beschrijf kort wat er niet werkt"></textarea>
-              </label>
-              <label class="field full">
-                <span>Foto toevoegen</span>
-                <input name="photo" type="file" accept="image/*" />
-              </label>
-              <div class="field full actions">
-                <button class="action-button primary" type="submit">${icon("send", 17)}Melding opslaan</button>
-                <a class="ghost-button" href="${state.room.servicePortal}" target="_blank" rel="noreferrer">${icon("external-link", 17)}Serviceportaal</a>
-              </div>
-              <p class="form-note field full" id="supportNote"></p>
-            </form>
-          </section>
-        </aside>
+            <p class="form-note field full" id="supportNote"></p>
+          </form>
+        </section>
       </div>
     </section>
+  `;
+}
+
+function renderPlatformChoice(scenario) {
+  return `
+    <article class="platform-choice">
+      <div>
+        <h2>${scenario.title}</h2>
+        <p>${scenario.summary}</p>
+      </div>
+      <ol class="step-list">
+        ${scenario.steps.slice(0, 4).map((step) => `<li>${step}</li>`).join("")}
+      </ol>
+    </article>
   `;
 }
 
@@ -496,11 +516,27 @@ function bindEvents() {
   }
 
   document.querySelectorAll("[data-mode]").forEach((button) => {
-    button.addEventListener("click", () => {
-      state.mode = button.dataset.mode;
+    button.addEventListener("click", (event) => {
+      event.stopPropagation();
+      const nextMode = button.dataset.mode;
+      state.mode = nextMode;
+      if (nextMode === "powerdown") {
+        state.poweredDownAt = Date.now();
+      }
       render();
     });
   });
+
+  const dimmedScene = document.querySelector(".meeting-room-scene.powered-down");
+  if (dimmedScene) {
+    const wakeScreens = () => {
+      if (Date.now() - state.poweredDownAt < 250) return;
+      state.mode = "start";
+      render();
+    };
+    dimmedScene.addEventListener("mousemove", wakeScreens, { once: true });
+    dimmedScene.addEventListener("click", wakeScreens, { once: true });
+  }
 
   document.querySelectorAll("[data-action]").forEach((element) => {
     element.addEventListener("click", handleAction);
@@ -591,7 +627,7 @@ function handleInput(event) {
 function renderQrCodes() {
   document.querySelectorAll(".qr-code[data-qr]").forEach((target) => {
     const text = target.dataset.qr;
-    const size = target.closest(".panel-qr") ? 78 : 170;
+    const size = target.closest(".sony-screen") ? 180 : target.closest(".panel-qr") ? 78 : 170;
     target.innerHTML = "";
     if (window.QRCode) {
       new window.QRCode(target, {

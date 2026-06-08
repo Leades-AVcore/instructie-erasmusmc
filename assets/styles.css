@@ -368,21 +368,21 @@ p {
   min-height: auto;
   overflow: hidden;
   border: 1px solid #dfe4ee;
-  border-radius: 28px;
-  background: url("./meeting-room-reference.png") center / cover no-repeat;
+  border-radius: 8px;
+  background: url("./meeting-room-background.png") center / cover no-repeat;
   box-shadow: 0 24px 70px rgba(60, 64, 67, 0.18);
   isolation: isolate;
 }
 
 .sony-display {
   position: absolute;
-  left: 31.4%;
-  top: 10.1%;
+  left: 31.95%;
+  top: 9.86%;
   z-index: 3;
-  width: 45.4%;
+  width: 45.95%;
   aspect-ratio: 16 / 9;
   padding: 0;
-  border-radius: 2px;
+  border-radius: 1px;
   background: transparent;
   box-shadow: none;
 }
@@ -474,29 +474,29 @@ p {
 
 .touch-panel-device {
   position: absolute;
-  left: 24%;
-  top: 68.3%;
+  left: 24.9%;
+  top: 70.6%;
   z-index: 5;
-  width: 25.4%;
-  transform: perspective(900px) rotateX(8deg) rotateZ(1.5deg);
+  width: 20.7%;
+  transform: perspective(900px) rotateX(6deg) rotateZ(1deg);
   transform-origin: center bottom;
-  padding: 7px;
-  border-radius: 14px;
-  background: #11151b;
-  box-shadow:
-    0 16px 24px rgba(32, 33, 36, 0.32),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  padding: 0;
+  border-radius: 6px;
+  background: transparent;
+  box-shadow: none;
 }
 
 .touch-panel-screen {
   position: relative;
   display: grid;
-  gap: 12px;
+  gap: 8px;
   aspect-ratio: 16 / 9;
   overflow: hidden;
-  border-radius: 8px;
+  border: 1px solid rgba(7, 31, 85, 0.1);
+  border-radius: 6px;
   background: #f8fbff;
-  padding: 12px;
+  padding: 9px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.68);
 }
 
 .touch-panel-screen .panel-top {
@@ -533,17 +533,17 @@ p {
 
 .touch-button-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
 }
 
 .touch-button-grid .panel-button {
-  min-height: 58px;
-  border-radius: 10px;
+  min-height: 42px;
+  border-radius: 8px;
   background: #f8fafc;
   font-size: 14px;
   gap: 4px;
-  padding: 8px 6px;
+  padding: 6px;
   color: #07327a;
 }
 
@@ -553,7 +553,7 @@ p {
 }
 
 .touch-button-grid .panel-button span {
-  font-size: clamp(9px, 0.86vw, 13px);
+  font-size: clamp(8px, 0.68vw, 11px);
   line-height: 1.05;
 }
 
@@ -565,11 +565,61 @@ p {
   box-shadow: inset 0 0 0 1px rgba(26, 115, 232, 0.12);
 }
 
+.primary-controls .panel-button {
+  min-height: 54px;
+  font-weight: 850;
+}
+
+.sub-controls {
+  margin-right: 36%;
+}
+
+.sub-controls .panel-button {
+  min-height: 34px;
+  background: #fff;
+  color: #174ea6;
+}
+
+.sub-controls .panel-button.danger {
+  border-color: rgba(217, 48, 37, 0.32);
+  color: var(--accent);
+}
+
+.sub-controls .panel-button.danger.active,
+.sub-controls .panel-button.danger:hover {
+  border-color: var(--accent);
+  background: #fce8e6;
+  color: #a50e0e;
+}
+
 .touch-panel-screen .volume-row {
   gap: 6px;
   color: #071f55;
   font-size: clamp(10px, 0.9vw, 14px);
   font-weight: 750;
+}
+
+.panel-volume-corner {
+  position: absolute;
+  right: 9px;
+  bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #071f55;
+  font-size: clamp(8px, 0.64vw, 10px);
+  font-weight: 850;
+}
+
+.panel-volume-corner .icon-button {
+  width: 25px;
+  min-height: 24px;
+  border-radius: 7px;
+}
+
+.panel-volume-corner svg {
+  width: 14px !important;
+  height: 14px !important;
 }
 
 .touch-panel-screen .volume-controls {
@@ -595,16 +645,7 @@ p {
 }
 
 .wall-touch-panel {
-  position: absolute;
-  right: 15.35%;
-  top: 45.8%;
-  z-index: 4;
-  width: 5.3%;
-  aspect-ratio: 16 / 10;
-  padding: 0.42%;
-  border-radius: 4px;
-  background: #111827;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.28);
+  display: none;
 }
 
 .wall-touch-grid {
@@ -959,6 +1000,180 @@ p {
   margin-top: 14px;
 }
 
+.presentation-screen {
+  background:
+    linear-gradient(168deg, transparent 0 84%, rgba(185, 222, 247, 0.7) 84.2% 100%),
+    #f7fbff;
+  color: #062b6f;
+}
+
+.presentation-slide {
+  align-self: center;
+  justify-self: center;
+  width: 78%;
+  min-height: 58%;
+  padding: 5%;
+  border: 1px solid rgba(26, 115, 232, 0.16);
+  border-radius: 7px;
+  background: #fff;
+  box-shadow: 0 1.2vw 2.6vw rgba(7, 31, 85, 0.12);
+}
+
+.presentation-slide h2 {
+  margin-bottom: 2%;
+  color: #07327a;
+  font-size: clamp(17px, 2.25vw, 34px);
+  line-height: 1.05;
+}
+
+.presentation-slide p {
+  color: #1558b0;
+  font-size: clamp(8px, 0.95vw, 14px);
+}
+
+.slide-bars {
+  display: grid;
+  gap: 0.6vw;
+  margin-top: 5%;
+}
+
+.slide-bars span {
+  display: block;
+  height: 0.65vw;
+  border-radius: 999px;
+  background: #d2e3fc;
+}
+
+.slide-bars span:nth-child(1) {
+  width: 74%;
+}
+
+.slide-bars span:nth-child(2) {
+  width: 58%;
+}
+
+.slide-bars span:nth-child(3) {
+  width: 68%;
+}
+
+.slide-visual {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 4%;
+  margin-top: 6%;
+}
+
+.slide-visual span {
+  aspect-ratio: 16 / 9;
+  border-radius: 5px;
+  background:
+    linear-gradient(135deg, rgba(26, 115, 232, 0.82), rgba(0, 160, 190, 0.82)),
+    #e8f0fe;
+}
+
+.slide-visual span:last-child {
+  background: #eaf3ff;
+}
+
+.teams-screen {
+  align-content: stretch;
+  gap: 3%;
+  padding: 4% 4.5%;
+  background: #15142a;
+  color: #fff;
+}
+
+.teams-topbar,
+.teams-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2%;
+  font-size: clamp(7px, 0.9vw, 13px);
+}
+
+.teams-topbar span {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.teams-grid {
+  display: grid;
+  min-height: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2.6%;
+}
+
+.teams-tile {
+  position: relative;
+  display: grid;
+  min-height: 0;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 7px;
+  background: #25254a;
+}
+
+.teams-tile.active {
+  outline: 0.22vw solid #7b83eb;
+  background: #273a69;
+}
+
+.teams-tile span {
+  display: grid;
+  width: 3.6vw;
+  max-width: 56px;
+  min-width: 20px;
+  aspect-ratio: 1;
+  place-items: center;
+  border-radius: 50%;
+  background: #8ab4f8;
+  color: #071f55;
+  font-size: clamp(8px, 1vw, 15px);
+  font-weight: 850;
+}
+
+.teams-tile strong {
+  position: absolute;
+  right: 3%;
+  bottom: 4%;
+  left: 3%;
+  font-size: clamp(7px, 0.76vw, 11px);
+}
+
+.teams-controls {
+  justify-content: center;
+}
+
+.teams-controls span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35vw;
+  min-height: 1.9vw;
+  padding: 0 0.8vw;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.meeting-room-scene.powered-down .sony-screen,
+.meeting-room-scene.powered-down .touch-panel-screen {
+  filter: brightness(0.17) saturate(0.45);
+}
+
+.meeting-room-scene.powered-down::after {
+  content: "Power down";
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  display: grid;
+  place-items: center;
+  background: rgba(15, 23, 42, 0.18);
+  color: rgba(255, 255, 255, 0.72);
+  font-size: clamp(16px, 2vw, 28px);
+  font-weight: 800;
+  pointer-events: none;
+}
+
 .source-strip {
   position: absolute;
   right: 20px;
@@ -1150,6 +1365,89 @@ input[type="range"] {
   color: #fff;
 }
 
+.platform-workspace {
+  max-width: 980px;
+}
+
+.platform-head {
+  margin-bottom: 18px;
+}
+
+.platform-page {
+  display: grid;
+  gap: 16px;
+}
+
+.platform-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.platform-choice-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.platform-choice {
+  display: grid;
+  gap: 14px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(60, 64, 67, 0.08);
+}
+
+.platform-choice h2 {
+  margin-bottom: 4px;
+  color: #07327a;
+  font-size: clamp(21px, 3vw, 30px);
+}
+
+.platform-choice p {
+  color: var(--muted);
+}
+
+.platform-choice .step-list {
+  margin: 0;
+}
+
+.problems-card {
+  padding: 0;
+}
+
+.problems-card summary {
+  display: flex;
+  min-height: 64px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 20px;
+  color: #07327a;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 850;
+  list-style: none;
+}
+
+.problems-card summary::-webkit-details-marker {
+  display: none;
+}
+
+.problems-card[open] summary svg {
+  transform: rotate(180deg);
+}
+
+.problems-card .issue-list {
+  padding: 0 20px 20px;
+}
+
+.support-form-card h2 {
+  margin-bottom: 14px;
+  color: #07327a;
+}
+
 .tag {
   display: inline-flex;
   align-items: center;
@@ -1335,7 +1633,7 @@ input[type="range"] {
   }
 
   .sony-display {
-    width: 45.4%;
+    width: 45.95%;
   }
 
   .scene-videobar {
@@ -1343,7 +1641,7 @@ input[type="range"] {
   }
 
   .touch-panel-device {
-    width: 25.4%;
+    width: 20.7%;
   }
 
   .quick-actions {
@@ -1372,6 +1670,7 @@ input[type="range"] {
   .admin-grid,
   .metric-grid,
   .quick-actions,
+  .platform-actions,
   .field-grid {
     grid-template-columns: 1fr;
   }
@@ -1400,7 +1699,7 @@ input[type="range"] {
   }
 
   .sony-display {
-    width: 45.4%;
+    width: 45.95%;
   }
 
   .display-brand {
@@ -1466,10 +1765,10 @@ input[type="range"] {
   }
 
   .touch-panel-device {
-    left: 24%;
-    top: 68.3%;
-    width: 25.4%;
-    transform: perspective(900px) rotateX(8deg) rotateZ(1.5deg);
+    left: 24.9%;
+    top: 70.6%;
+    width: 20.7%;
+    transform: perspective(900px) rotateX(6deg) rotateZ(1deg);
   }
 
   .touch-panel-screen {
@@ -1478,12 +1777,12 @@ input[type="range"] {
   }
 
   .touch-button-grid {
-    gap: 6px;
+    gap: 5px;
   }
 
   .touch-button-grid .panel-button {
-    min-height: 62px;
-    border-radius: 14px;
+    min-height: 34px;
+    border-radius: 7px;
     font-size: 12px;
   }
 

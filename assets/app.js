@@ -327,7 +327,7 @@ function renderRoomPage() {
         </div>
 
         <div class="platform-choice-grid">
-          ${state.room.scenarios.map(renderPlatformChoice).join("")}
+          ${platformScenarios().map(renderPlatformChoice).join("")}
         </div>
 
         <details class="support-card problems-card">
@@ -370,6 +370,12 @@ function renderRoomPage() {
       </div>
     </section>
   `;
+}
+
+function platformScenarios() {
+  const preferred = ["presenteren-laptop", "teams", "geluid", "afsluiten"];
+  const filtered = state.room.scenarios.filter((scenario) => preferred.includes(scenario.id));
+  return filtered.length ? filtered : state.room.scenarios.slice(0, 4);
 }
 
 function renderPlatformChoice(scenario) {

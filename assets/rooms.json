@@ -1,0 +1,278 @@
+{
+  "defaultRoom": "mdo-a12-04",
+  "rooms": [
+    {
+      "id": "mdo-a12-04",
+      "number": "A12-04",
+      "name": "MDO ruimte A12-04",
+      "type": "MDO-ruimte",
+      "location": "Erasmus MC, gebouw A, 12e verdieping",
+      "owner": "AV-support",
+      "status": "Beschikbaar",
+      "supportPhone": "010 704 12 34",
+      "servicePortal": "https://service.erasmusmc.nl",
+      "sources": ["Laptop via USB-C", "Laptop via HDMI", "EMC-PC"],
+      "scenarios": [
+        {
+          "id": "presenteren-laptop",
+          "title": "Presenteren vanaf laptop",
+          "summary": "Beeld vanaf een laptop tonen op het hoofdscherm.",
+          "steps": [
+            "Sluit de laptop aan met USB-C of HDMI.",
+            "Kies op het bedienpaneel Presenteren.",
+            "Selecteer de juiste bron.",
+            "Controleer of het beeld zichtbaar is op het hoofdscherm.",
+            "Controleer het geluid wanneer audio nodig is."
+          ]
+        },
+        {
+          "id": "presenteren-emc-pc",
+          "title": "Presenteren via EMC-PC",
+          "summary": "Gebruik de vaste PC in de ruimte.",
+          "steps": [
+            "Kies op het bedienpaneel Presenteren.",
+            "Selecteer EMC-PC als bron.",
+            "Log in met uw Erasmus MC-account.",
+            "Open de presentatie of toepassing.",
+            "Log na gebruik uit."
+          ]
+        },
+        {
+          "id": "teams",
+          "title": "Teams vergadering starten",
+          "summary": "Online of hybride overleg starten.",
+          "steps": [
+            "Kies op het bedienpaneel Teams vergadering.",
+            "Start de vergadering via de EMC-PC of gekoppelde laptop.",
+            "Controleer camera, microfoon en luidsprekers in Teams.",
+            "Controleer of externe deelnemers beeld en geluid ontvangen.",
+            "Sluit de vergadering af na gebruik."
+          ]
+        },
+        {
+          "id": "hybride",
+          "title": "Hybride overleg starten",
+          "summary": "De ruimte gebruiken met deelnemers in de zaal en online.",
+          "steps": [
+            "Kies op het bedienpaneel Hybride overleg.",
+            "Controleer of de zaalweergave zichtbaar is.",
+            "Controleer camera, microfoon en luidsprekers in de vergadertool.",
+            "Vraag online deelnemers om beeld en geluid kort te bevestigen.",
+            "Sluit de sessie af en zet de ruimte terug naar het startscherm."
+          ]
+        },
+        {
+          "id": "geluid",
+          "title": "Geluid controleren",
+          "summary": "Controle bij geen of te zacht geluid.",
+          "steps": [
+            "Controleer het volume op het bedienpaneel.",
+            "Controleer de audio-uitvoer op de laptop of EMC-PC.",
+            "Controleer of Teams de juiste luidspreker gebruikt.",
+            "Verhoog het volume stap voor stap.",
+            "Meld een storing wanneer er geen geluid beschikbaar blijft."
+          ]
+        },
+        {
+          "id": "afsluiten",
+          "title": "Sessie afsluiten",
+          "summary": "De ruimte netjes achterlaten.",
+          "steps": [
+            "Sluit de presentatie of vergadering af.",
+            "Log uit op de EMC-PC wanneer deze is gebruikt.",
+            "Koppel eigen apparatuur los.",
+            "Zet het volume terug naar een normaal niveau.",
+            "Kies Startscherm op het bedienpaneel."
+          ]
+        }
+      ],
+      "issues": [
+        "Geen beeld: controleer of de juiste bron is gekozen.",
+        "Geen geluid: controleer volume en audio-uitvoer.",
+        "Camera werkt niet: controleer in Teams of de juiste camera is geselecteerd.",
+        "Microfoon werkt niet: controleer in Teams of de microfoon niet gedempt is.",
+        "Teams ziet geen apparatuur: herstart de vergadering of kies opnieuw de juiste bron."
+      ],
+      "equipment": [
+        "Hoofdscherm 86 inch",
+        "Touch bedienpaneel 10 inch",
+        "EMC-PC",
+        "USB-C/HDMI aansluitpunt",
+        "Ruimtemicrofoons",
+        "PTZ camera",
+        "Plafondluidsprekers"
+      ],
+      "checks": [
+        "Laatste controle: 08-06-2026",
+        "Firmware bedienpaneel actueel",
+        "Camera preset gecontroleerd",
+        "Audio-instelling gecontroleerd"
+      ],
+      "incidents": [
+        {
+          "date": "03-06-2026",
+          "title": "Geen audio via laptop",
+          "status": "Opgelost"
+        },
+        {
+          "date": "29-05-2026",
+          "title": "Teams bron opnieuw geselecteerd",
+          "status": "Afgehandeld"
+        }
+      ]
+    },
+    {
+      "id": "onderwijs-c05-18",
+      "number": "C05-18",
+      "name": "Onderwijsruimte C05-18",
+      "type": "Onderwijsruimte",
+      "location": "Onderwijscentrum, 5e verdieping",
+      "owner": "AVO",
+      "status": "Beschikbaar",
+      "supportPhone": "010 704 56 78",
+      "servicePortal": "https://service.erasmusmc.nl",
+      "sources": ["Laptop via USB-C", "EMC-PC"],
+      "scenarios": [
+        {
+          "id": "presenteren-laptop",
+          "title": "Presenteren vanaf laptop",
+          "summary": "Lesmateriaal tonen vanaf eigen laptop.",
+          "steps": [
+            "Sluit de laptop aan met USB-C.",
+            "Kies Presenteren op het bedienpaneel.",
+            "Controleer of het beeld op het scherm staat.",
+            "Open de presentatie.",
+            "Controleer het geluid bij video."
+          ]
+        },
+        {
+          "id": "teams",
+          "title": "Teams vergadering starten",
+          "summary": "Online deelnemers laten meekijken.",
+          "steps": [
+            "Kies Teams vergadering op het bedienpaneel.",
+            "Start Teams via de EMC-PC.",
+            "Controleer camera, microfoon en luidsprekers.",
+            "Deel indien nodig het scherm.",
+            "Sluit Teams af na de les."
+          ]
+        },
+        {
+          "id": "geluid",
+          "title": "Geluid controleren",
+          "summary": "Audio bij presentaties of video controleren.",
+          "steps": [
+            "Controleer het volume op het bedienpaneel.",
+            "Controleer de audio-uitvoer van de laptop.",
+            "Start de video opnieuw wanneer audio niet direct meekomt.",
+            "Meld een storing wanneer het probleem blijft bestaan."
+          ]
+        },
+        {
+          "id": "afsluiten",
+          "title": "Sessie afsluiten",
+          "summary": "De ruimte klaarzetten voor de volgende gebruiker.",
+          "steps": [
+            "Sluit programma's af.",
+            "Koppel de laptop los.",
+            "Log uit op de EMC-PC.",
+            "Kies Startscherm op het bedienpaneel."
+          ]
+        }
+      ],
+      "issues": [
+        "Geen beeld: kies opnieuw Presenteren.",
+        "Geen geluid: controleer de laptopuitvoer.",
+        "Teams-camera ontbreekt: kies de ruimtecamera in Teams.",
+        "Presentatie staat op laptop maar niet op scherm: controleer schermduplicatie."
+      ],
+      "equipment": [
+        "Hoofdscherm 75 inch",
+        "Touch bedienpaneel 7 inch",
+        "EMC-PC",
+        "USB-C aansluitpunt",
+        "Ruimtemicrofoon",
+        "Camera"
+      ],
+      "checks": [
+        "Laatste controle: 06-06-2026",
+        "USB-C beeld getest",
+        "Audio getest"
+      ],
+      "incidents": [
+        {
+          "date": "01-06-2026",
+          "title": "USB-C kabel vervangen",
+          "status": "Opgelost"
+        }
+      ]
+    },
+    {
+      "id": "vergader-d03-22",
+      "number": "D03-22",
+      "name": "Vergaderruimte D03-22",
+      "type": "Vergaderruimte",
+      "location": "Erasmus MC, gebouw D, 3e verdieping",
+      "owner": "IT-servicedesk",
+      "status": "In gebruik",
+      "supportPhone": "010 704 90 90",
+      "servicePortal": "https://service.erasmusmc.nl",
+      "sources": ["Laptop via HDMI", "EMC-PC"],
+      "scenarios": [
+        {
+          "id": "presenteren-laptop",
+          "title": "Presenteren vanaf laptop",
+          "summary": "Vergaderstukken tonen op het scherm.",
+          "steps": [
+            "Sluit de laptop aan met HDMI.",
+            "Kies Presenteren op het bedienpaneel.",
+            "Selecteer Laptop HDMI.",
+            "Controleer of het beeld zichtbaar is.",
+            "Controleer het geluid wanneer audio nodig is."
+          ]
+        },
+        {
+          "id": "teams",
+          "title": "Teams vergadering starten",
+          "summary": "Een online vergadering starten.",
+          "steps": [
+            "Kies Teams vergadering op het bedienpaneel.",
+            "Open Teams op de EMC-PC of laptop.",
+            "Controleer camera, microfoon en luidsprekers.",
+            "Start de vergadering.",
+            "Sluit de vergadering af na gebruik."
+          ]
+        },
+        {
+          "id": "afsluiten",
+          "title": "Sessie afsluiten",
+          "summary": "Vergadering afronden.",
+          "steps": [
+            "Stop de vergadering.",
+            "Koppel de laptop los.",
+            "Zet het volume terug.",
+            "Kies Startscherm."
+          ]
+        }
+      ],
+      "issues": [
+        "Geen beeld: controleer HDMI en bronselectie.",
+        "Geen geluid: controleer volume en uitvoerapparaat.",
+        "Online deelnemers horen de ruimte niet: controleer microfoonkeuze in Teams."
+      ],
+      "equipment": [
+        "Hoofdscherm 65 inch",
+        "Touch bedienpaneel 7 inch",
+        "EMC-PC",
+        "HDMI aansluitpunt",
+        "Camera en microfoonset"
+      ],
+      "checks": [
+        "Laatste controle: 05-06-2026",
+        "HDMI bron getest",
+        "Teams audio getest"
+      ],
+      "incidents": []
+    }
+  ]
+}

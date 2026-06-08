@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AV Instructieplatform Erasmus MC</title>
+    <meta
+      name="description"
+      content="Interactief prototype voor ruimtespecifieke AV-instructie, ondersteuning en beheer."
+    />
+    <link rel="stylesheet" href="./assets/styles.css" />
+    <script defer src="./assets/vendor/qrcode.min.js"></script>
+    <script defer src="./assets/vendor/lucide.min.js"></script>
+    <script defer src="./assets/app.js"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="./index.html" aria-label="AV Instructieplatform">
+          <span class="brand-mark">AV</span>
+          <span>
+            <strong>Instructieplatform</strong>
+            <small>Erasmus MC AV-ruimtes</small>
+          </span>
+        </a>
+        <nav class="primary-nav" aria-label="Hoofdnavigatie">
+          <a data-nav="home" href="./index.html">Overzicht</a>
+          <a data-nav="screens" href="./index.html?view=screens">Optie 1</a>
+          <a data-nav="room" href="./index.html?view=room">Optie 2</a>
+          <a data-nav="beheer" href="./index.html?view=beheer">Beheer</a>
+        </nav>
+      </header>
+
+      <main id="app" tabindex="-1">
+        <section class="loading-state" aria-live="polite">
+          <span class="loader"></span>
+          Platform laden
+        </section>
+      </main>
+    </div>
+
+    <template id="icon-template">
+      <i data-lucide="" aria-hidden="true"></i>
+    </template>
+  </body>
+</html>

@@ -96,27 +96,27 @@ function renderHome() {
         <article class="option-card">
           <header>
             <div>
-              <p class="eyebrow">Optie 1</p>
-              <h2>Schermuitwerking</h2>
-              <p>Het hoofdscherm en bedienpaneel als interactieve demo voor de gekozen ruimte.</p>
+              <p class="eyebrow">Demo weergave</p>
+              <h2>Vergaderruimte</h2>
+              <p>Een realistische ruimteweergave met Sony scherm, Yealink UVC40 en touchpanel op tafel.</p>
             </div>
             <span class="icon-tile">${icon("monitor", 24)}</span>
           </header>
           <ul>
-            <li>Welkomscherm met QR-code</li>
-            <li>Bedienpaneel zonder camera- en microfoonknop</li>
-            <li>Werkende scenario's voor presenteren, Teams en hybride overleg</li>
+            <li>65 inch scherm aan de wand</li>
+            <li>10 inch bedienpaneel op tafel</li>
+            <li>Grote knoppen voor Teams, Presenteren en Help</li>
           </ul>
           <div class="actions">
-            <a class="pill-button primary" href="${roomLink("screens")}">${icon("play", 18)}Open optie 1</a>
+            <a class="pill-button primary" href="${roomLink("screens")}">${icon("play", 18)}Open demo</a>
           </div>
         </article>
 
         <article class="option-card">
           <header>
             <div>
-              <p class="eyebrow">Optie 2</p>
-              <h2>QR-platform</h2>
+              <p class="eyebrow">Demo platform</p>
+              <h2>Mobiele instructie</h2>
               <p>De ruimtespecifieke pagina waar gebruikers na het scannen van de QR-code terechtkomen.</p>
             </div>
             <span class="icon-tile">${icon("qr-code", 24)}</span>
@@ -127,7 +127,7 @@ function renderHome() {
             <li>Support en concept-storingsmelding</li>
           </ul>
           <div class="actions">
-            <a class="pill-button primary" href="${roomLink("room")}">${icon("external-link", 18)}Open optie 2</a>
+            <a class="pill-button primary" href="${roomLink("room")}">${icon("external-link", 18)}Open platform</a>
             <a class="ghost-button" href="${roomLink("beheer")}">${icon("settings", 18)}Beheer</a>
           </div>
         </article>
@@ -138,77 +138,74 @@ function renderHome() {
 
 function renderScreens() {
   return `
-    <section class="workspace">
+    <section class="workspace demo-workspace">
       <div class="page-head">
         <div>
-          <p class="eyebrow">Optie 1</p>
-          <h1>Schermen in de AV-ruimte</h1>
+          <p class="eyebrow">Demo weergave</p>
+          <h1>Vergaderruimte in gebruik</h1>
           <p>${state.room.name} - ${state.room.location}</p>
         </div>
         ${roomSelector()}
       </div>
 
-      <div class="screen-demo">
-        <section class="display-frame" aria-label="Hoofdscherm">
-          <div class="meeting-screen">
-            ${renderMeetingScreen()}
-            <div class="source-strip">
-              <span>${state.room.number} · ${state.room.type}</span>
-              <span>Bron: ${state.source} · Volume: ${state.volume}%</span>
+      <div class="meeting-room-scene" aria-label="Realistische vergaderruimte demo">
+        <div class="room-back-wall">
+          <div class="wall-panel">
+            <div class="sony-display" aria-label="Sony 65 inch hoofdscherm">
+              <div class="display-brand">SONY</div>
+              <div class="sony-screen">
+                ${renderMeetingScreen()}
+              </div>
             </div>
           </div>
-        </section>
+        </div>
 
-        <aside class="control-panel-frame" aria-label="Bedienpaneel">
-          <div class="control-panel">
-            <div class="panel-top">
-              <div class="panel-room">
-                <strong>${state.room.number}</strong>
-                <small>${state.room.type}</small>
-              </div>
-              <button class="icon-button" data-action="help" title="Help">${icon("circle-help", 20)}</button>
-            </div>
+        <div class="room-floor">
+          <div class="chair chair-left"></div>
+          <div class="chair chair-right"></div>
+          <div class="conference-table">
+            <div class="table-highlight"></div>
+            <aside class="touch-panel-device" aria-label="10 inch bedienpaneel op tafel">
+              <div class="touch-panel-screen">
+                <div class="panel-top">
+                  <div class="panel-room">
+                    <strong>${state.room.number}</strong>
+                    <small>${state.room.type}</small>
+                  </div>
+                  <span class="panel-chip">${state.volume}%</span>
+                </div>
 
-            <div class="panel-grid">
-              ${panelButton("start", "home", "Startscherm")}
-              ${panelButton("presenteren", "presentation", "Presenteren")}
-              ${panelButton("teams", "video", "Teams vergadering")}
-              ${panelButton("hybride", "users", "Hybride overleg")}
-            </div>
+                <div class="touch-button-grid">
+                  ${panelButton("teams", "video", "Teams")}
+                  ${panelButton("presenteren", "presentation", "Presenteren")}
+                  ${panelButton("help", "circle-help", "Help")}
+                </div>
 
-            <div class="panel-tools">
-              <label class="source-picker">
-                <span>Bron</span>
-                <select data-action="source">
-                  ${state.room.sources.map((source) => `<option ${source === state.source ? "selected" : ""}>${source}</option>`).join("")}
-                </select>
-              </label>
+                <div class="volume-row">
+                  <span>Volume</span>
+                  <div class="volume-controls">
+                    <button class="icon-button" data-action="volume-down" title="Volume lager">${icon("volume-1", 19)}</button>
+                    <input data-action="volume" type="range" min="0" max="100" value="${state.volume}" aria-label="Volume" />
+                    <button class="icon-button" data-action="volume-up" title="Volume hoger">${icon("volume-2", 19)}</button>
+                  </div>
+                </div>
 
-              <div class="volume-row">
-                <span>Volume</span>
-                <div class="volume-controls">
-                  <button class="icon-button" data-action="volume-down" title="Volume lager">${icon("volume-1", 19)}</button>
-                  <input data-action="volume" type="range" min="0" max="100" value="${state.volume}" aria-label="Volume" />
-                  <button class="icon-button" data-action="volume-up" title="Volume hoger">${icon("volume-2", 19)}</button>
+                <div class="panel-help ${state.mode === "help" ? "open" : ""}" id="panelHelp">
+                  <strong>Hulp nodig?</strong>
+                  <span>Scan de QR-code op het hoofdscherm of open het demo platform.</span>
+                  <a class="pill-button primary" href="${roomLink("room")}">${icon("external-link", 17)}Open platform</a>
                 </div>
               </div>
-            </div>
-
-            <div class="panel-help" id="panelHelp">
-              <strong>Hulp nodig in ruimte ${state.room.number}?</strong>
-              <span>Scan de QR-code voor de volledige instructie, ondersteuning of storingsmelding.</span>
-              <a class="pill-button primary" href="${roomLink("room")}">${icon("external-link", 17)}Open instructie</a>
-            </div>
-
-            <div class="panel-qr">
-              <div class="qr-code" data-qr="${publicRoomUrl()}"></div>
-              <div>
-                <strong>Scan voor instructie of ondersteuning</strong>
-                <p>${state.room.number}</p>
-              </div>
-            </div>
+            </aside>
           </div>
-        </aside>
+          <div class="chair chair-front-left"></div>
+          <div class="chair chair-front-right"></div>
+        </div>
+        <div class="scene-videobar" aria-label="Yealink UVC40 videobar zichtbaar onder het scherm">
+          <span class="camera-lens"></span>
+          <span class="bar-brand">Yealink UVC40</span>
+          <span class="speaker-dot"></span>
+        </div>
       </div>
     </section>
   `;
@@ -221,26 +218,36 @@ function renderMeetingScreen() {
   if (state.mode === "teams") {
     return screenStatus("video", "Teams vergadering", "Start Teams via de EMC-PC of gekoppelde laptop en controleer camera, microfoon en luidsprekers.");
   }
-  if (state.mode === "hybride") {
-    return screenStatus("users", "Hybride overleg", "De ruimte is ingesteld voor deelnemers in de zaal en online. Controleer met externe deelnemers of beeld en geluid goed binnenkomen.");
+  if (state.mode === "help") {
+    return `
+      <div class="screen-content">
+        <img class="screen-logo" src="./assets/erasmus-mc.png" alt="Erasmus MC" />
+        <div class="screen-help-layout">
+          <div>
+            <div class="screen-kicker">Hulp in ruimte ${state.room.number}</div>
+            <h2 class="screen-title">Scan voor ondersteuning</h2>
+            <p class="screen-subtitle">Open de ruimtespecifieke instructie, meld een storing of bel direct support.</p>
+          </div>
+          <div class="qr-panel">
+            <div class="qr-code" data-qr="${publicRoomUrl()}"></div>
+            <strong>Demo platform</strong>
+          </div>
+        </div>
+      </div>
+    `;
   }
   return `
     <div class="screen-content">
+      <img class="screen-logo" src="./assets/erasmus-mc.png" alt="Erasmus MC" />
       <div class="welcome-layout">
         <div>
           <div class="screen-kicker">Welkom in ruimte ${state.room.number}</div>
           <h2 class="screen-title">${state.room.type}</h2>
           <p class="screen-subtitle">Kies uw gebruiksscenario op het bedienpaneel.</p>
-          <ul class="screen-list">
-            <li>${icon("check-circle", 24)}Kies Presenteren voor beeld vanaf laptop of EMC-PC.</li>
-            <li>${icon("check-circle", 24)}Kies Teams voor een online of hybride vergadering.</li>
-            <li>${icon("check-circle", 24)}Controleer beeld, geluid, camera en microfoon.</li>
-            <li>${icon("qr-code", 24)}Scan de QR-code voor instructie, ondersteuning of storing.</li>
-          </ul>
         </div>
         <div class="qr-panel">
           <div class="qr-code" data-qr="${publicRoomUrl()}"></div>
-          <strong>Ruimtespecifieke instructie</strong>
+          <strong>Demo platform</strong>
         </div>
       </div>
     </div>
@@ -250,12 +257,17 @@ function renderMeetingScreen() {
 function screenStatus(iconName, title, text) {
   return `
     <div class="screen-content">
+      <img class="screen-logo" src="./assets/erasmus-mc.png" alt="Erasmus MC" />
       <div class="screen-status">
         <span class="icon-tile">${icon(iconName, 30)}</span>
         <div>
           <p class="screen-kicker">${state.room.number} · ${state.room.type}</p>
           <h2>${title}</h2>
           <p class="screen-subtitle">${text}</p>
+          <div class="screen-action-row compact">
+            <span>Volume ${state.volume}%</span>
+            <span>${state.room.number}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -276,7 +288,8 @@ function renderRoomPage() {
     <section class="workspace">
       <div class="page-head">
         <div>
-          <p class="eyebrow">Optie 2</p>
+          <img class="page-logo" src="./assets/erasmus-mc.png" alt="Erasmus MC" />
+          <p class="eyebrow">Demo platform</p>
           <h1>${state.room.name}</h1>
           <p>${state.room.location}</p>
           <div class="meta-row">
@@ -289,6 +302,12 @@ function renderRoomPage() {
       </div>
 
       <div class="room-page">
+        <div class="quick-actions">
+          <a class="quick-action primary" href="#supportForm">${icon("message-square-warning", 22)}Storing melden</a>
+          <a class="quick-action" href="tel:${state.room.supportPhone.replaceAll(" ", "")}">${icon("phone", 22)}Bel support</a>
+          <a class="quick-action" href="${roomLink("beheer")}">${icon("lock-keyhole", 22)}Beheer</a>
+        </div>
+
         <div class="scenario-grid">
           ${state.room.scenarios.map(renderScenario).join("")}
         </div>
@@ -561,7 +580,9 @@ function handleInput(event) {
   const action = event.currentTarget.dataset.action;
   if (action === "volume") {
     state.volume = Number(event.currentTarget.value);
-    document.querySelector(".source-strip span:last-child").textContent = `Bron: ${state.source} · Volume: ${state.volume}%`;
+    const sourceStrip = document.querySelector(".source-strip span:last-child");
+    if (sourceStrip) sourceStrip.textContent = `Bron: ${state.source} · Volume: ${state.volume}%`;
+    document.querySelector(".panel-chip") && (document.querySelector(".panel-chip").textContent = `${state.volume}%`);
   }
   if (action === "source") {
     state.source = event.currentTarget.value;

@@ -190,6 +190,8 @@ function renderScreens() {
             </div>
           </div>
         </aside>
+
+        <img class="room-overlay" src="./assets/room-overlay-cutout.png" alt="" aria-hidden="true" />
       </div>
     </section>
   `;

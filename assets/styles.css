@@ -369,7 +369,7 @@ p {
   overflow: hidden;
   border: 1px solid #dfe4ee;
   border-radius: 8px;
-  background: #05070a;
+  background: url("./meeting-room-background.png") center / cover no-repeat;
   box-shadow: 0 24px 70px rgba(60, 64, 67, 0.18);
   isolation: isolate;
 }
